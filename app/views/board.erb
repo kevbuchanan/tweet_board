@@ -2,5 +2,9 @@
   <h1><%=@board.title %></h1>
 </div>
 <div class='pure-u-1'>
-  <%= erb :_bulletin, layout: false, locals: {post: @board.posts.first} %>
+  <% if @board.posts.empty? %>
+  <p>This board doesn't have any posts yet.</p>
+  <% else %>
+  <%= erb :_bulletin, layout: false, locals: {post: @board.next_post} %>
+  <% end %>
 </div>

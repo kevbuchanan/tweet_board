@@ -17,7 +17,12 @@ end
 
 get '/board/:twitter_name' do
   @board = Board.find_by_twitter_name(params[:twitter_name])
-  erb :board
+  @board.load_new_posts
+  if request.xhr?
+    erb :_bulletin, layout: false, locals: {post: @board.next_post}
+  else
+    erb :board
+  end
 end
 
 post '/board/:twitter_name/edit' do
