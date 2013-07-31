@@ -1,0 +1,5 @@
+<div class='bulletin'>
+  <p><%=post.text%></p>
+  <p>Posted by @<%=post.contributor.twitter_name%> on <%=post.start_date.strftime('%B %d')%></p>
+  <p>This bulletin will expire on <%=post.end_date.strftime('%B %d at %I:%M%p')%></p>
+</div>

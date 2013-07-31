@@ -13,7 +13,7 @@
   <% else %>
     <ul>
     <% @user.boards.each do |board| %>
-      <li><%=board.title%>, @<%=board.twitter_name%></li>
+      <li><a href='/board/<%=board.twitter_name%>'><%=board.title%></a>, <a href='http://twitter.com/<%=board.twitter_name%>'>@<%=board.twitter_name%></a></li>
     <% end %>
     </ul>
   <% end %>

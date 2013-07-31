@@ -1,0 +1,6 @@
+<div class='pure-u-1'>
+  <h1><%=@board.title %></h1>
+</div>
+<div class='pure-u-1'>
+  <%= erb :_bulletin, layout: false, locals: {post: @board.posts.first} %>
+</div>
