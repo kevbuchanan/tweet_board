@@ -1,0 +1,10 @@
+<div class='pure-u-1'>
+  <h2>Title your bulletin board for @<%=@board.twitter_name%></h2>
+</div>
+<div class='pure-u-1'>
+  <form class='pure-form pure-form-stacked' action='/board/<%=@board.twitter_name%>/edit' method='post'>
+    <label>Title<input type='text' placeholder="Title" name='board[title]'></label>
+    <label>Description<input type='text' placeholder="Description" name='board[description]'></label>
+    <input class='pure-button pure-button-primary pure-button-xlarge' type='submit' value='Create a new board'>
+  </form>
+</div>

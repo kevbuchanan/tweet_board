@@ -19,3 +19,7 @@ get '/board/:twitter_name' do
   @board = Board.find_by_twitter_name(params[:twitter_name])
   erb :board
 end
+
+post '/board/:twitter_name/edit' do
+
+end
