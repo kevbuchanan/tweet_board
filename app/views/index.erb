@@ -1,5 +1,4 @@
 <div class='header pure-u-1-2'>
-  <h1>Twitter Bulletin Board</h1>
   <h2>Create an online bulletin board through twitter</h2>
 </div>
 <div class='pure-u-1'></div>
@@ -11,7 +10,9 @@
     <li>Charts</li>
   </ol>
 </div>
+<% if !logged_in? %>
 <div class='sign-in pure-u-1'>
   <h3>Sign In with twitter</h3>
   <form class='pure-form' action='/sign_in' method='get'><input class='pure-button pure-button-xlarge pure-button-primary' type='submit' value="Let's do it!"></form>
 </div>
+<% end %>
