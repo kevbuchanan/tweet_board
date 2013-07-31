@@ -1,0 +1,17 @@
+.container {
+  font-family: 'Source Sans Pro', sans-serif;
+  margin: 20px auto;
+  width: 80%;
+  padding: 0px 20px 20px 20px;
+}
+th {
+  text-align: left;
+}
+
+.description {
+  text-align: left;
+}
+
+.sign-in {
+  text-align: center;
+}
