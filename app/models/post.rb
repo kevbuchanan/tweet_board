@@ -6,11 +6,28 @@ class Post < ActiveRecord::Base
   validates :tweet_id, uniqueness: true
 
   def self.create_from_tweet(tweet)
+    attributes = {}
     contributor = Contributor.find_or_create_by_twitter_name(tweet.user.screen_name)
-    text = tweet.text
-    tweet_id = tweet.id
-    start_date = Time.now
-    end_date = Time.now + 1.week
-    contributor.posts.create(text: tweet.text, start_date: start_date, end_date: end_date, tweet_id: tweet_id)
+    contributor.update_attributes(name: tweet.user.name)
+    attributes[:contributor_id] = contributor.id
+    attributes[:text] = Post.get_plain_text(tweet.text)
+    attributes[:tweet_id] = tweet.id
+    attributes[:start_date] = Time.now
+    attributes[:end_date] = Time.now + 2.days
+    post = contributor.posts.create(attributes)
+    post.create_tags(tweet.hashtags)
+    post
+  end
+
+  def self.get_plain_text(tweet_text)
+    without_ats = tweet_text.gsub(/@\w+/, '')
+    without_tags = without_ats.gsub(/#\w+/, '')
+    without_tags.strip.capitalize
+  end
+
+  def create_tags(hashtags)
+    hashtags.each do |tag|
+      self.tags.create(text: tag.text)
+    end
   end
 end

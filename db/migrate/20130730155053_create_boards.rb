@@ -8,7 +8,7 @@ class CreateBoards < ActiveRecord::Migration
       t.string :oauth_token_secret
       t.string :title
       t.string :description
-      t.date :last_update
+      t.datetime :last_update
       t.timestamps
     end
   end

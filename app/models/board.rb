@@ -4,25 +4,28 @@ class Board < ActiveRecord::Base
   has_many :contributors_boards
   has_many :contributors, through: :contributors_boards
 
-  after_create :add_owner_as_contributor
-  # after_create :load_posts
+  # after_create :add_owner_as_contributor
 
   def load_posts
     self.mentions.each do |tweet|
-      self.posts << Post.create_from_tweet(tweet) if self.has_contributor?(tweet.user.screen_name)
+      self.posts << Post.create_from_tweet(tweet)# if self.has_contributor?(tweet.user.screen_name)
     end
-    # self.last_update = Time.now
-    # self.save
+    self.last_update = Time.now
+    self.save
+  end
+
+  def active_posts
+    self.posts.where("start_date < ? AND end_date > ?", Time.now, Time.now)
   end
 
   def next_post
-    # load_posts if self.last_update < 2.minutes.ago
+    load_posts if self.last_update.nil? || self.last_update < 5.minutes.ago
     self.posts.sample
   end
 
-  def add_owner_as_contributor
-    self.contributors.create(twitter_name: self.owner.twitter_name)
-  end
+  # def add_owner_as_contributor
+  #   self.contributors.create(twitter_name: self.owner.twitter_name, name: self.owner.name)
+  # end
 
   def has_contributor?(user_name)
     !self.contributors.find_by_twitter_name(user_name).nil?
