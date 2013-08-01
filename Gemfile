@@ -17,6 +17,7 @@ gem 'rake'
 
 gem 'oauth'
 gem 'twitter'
+gem 'tweetstream'
 gem 'bcrypt-ruby'
 
 gem 'shotgun'

@@ -16,13 +16,7 @@ require 'active_record'
 require 'logger'
 require 'oauth'
 require 'twitter'
-
-# Twitter.configure do |config|
-#   config.consumer_key = 'jJZr9hk4dR8NvCMkicA0wg'
-#   config.consumer_secret = 'G0GpbI8PsiHhirQYJzUAlQe8TDwYpHyLCLY5cn63Pc'
-#   config.oauth_token = '1374694152-No0HLoeqvUhNqO1LPPo1YlMup19JbyswRF35Xp2'
-#   config.oauth_token_secret = 'bBkxGwhlHXbKNEG0htQltHRjdSAsUUkheuXjfSbI'
-# end
+require 'tweetstream'
 
 require 'bcrypt'
 
@@ -46,4 +40,12 @@ require APP_ROOT.join('config', 'database')
 Twitter.configure do |config|
   config.consumer_key = ENV['TWITTER_KEY']
   config.consumer_secret = ENV['TWITTER_SECRET']
+end
+
+TweetStream.configure do |config|
+  config.consumer_key       = ENV['TWITTER_KEY']
+  config.consumer_secret    = ENV['TWITTER_SECRET']
+  config.oauth_token        = ENV['OAUTH_TOKEN']
+  config.oauth_token_secret = ENV['OAUTH_SECRET']
+  config.auth_method        = :oauth
 end

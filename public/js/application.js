@@ -1,7 +1,13 @@
+
 $(document).ready(function() {
-  var cyclePosts = setInterval(function(){
+  var getBulletins = window.setInterval(function(){
     $.get('/board/DBCBoard', function(response){
-      $('.bulletin').replaceWith(response);
+      $('.bulletin').hide(2500, 'easeOutBounce', function(){
+        $('.bulletin').replaceWith($(response));
+        $('.bulletin').hide();
+        $('.bulletin').show(2500, 'easeOutBounce');
+      });
     });
   }, 10000);
 });
+
