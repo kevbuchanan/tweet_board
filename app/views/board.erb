@@ -1,3 +1,4 @@
+<div class='container'>
 <div class='pure-u-1'>
   <h1><%=@board.title %></h1>
 </div>
@@ -7,4 +8,5 @@
   <% else %>
   <%= erb :_bulletin, layout: false, locals: {post: @board.next_post} %>
   <% end %>
+</div>
 </div>

@@ -1,3 +1,14 @@
+<header class='pure-g container'>
+  <div class='pure-u-4-5'>
+    <h1>Twitter Bulletin Board</h1>
+  </div>
+  <div class='pure-u-1-5'>
+    <% if logged_in? %>
+    <form action='/sign_out' method='get'><input class='pure-button pure-button-primary' type='submit' value='Sign Out'></form>
+    <% end %>
+  </div>
+</header>
+<div class='container pure-g'>
 <div class='header pure-u-1-2'>
   <h2>Create an online bulletin board through twitter</h2>
 </div>
@@ -16,3 +27,4 @@
   <form class='pure-form' action='/sign_in' method='get'><input class='pure-button pure-button-xlarge pure-button-primary' type='submit' value="Let's do it!"></form>
 </div>
 <% end %>
+</div>

@@ -1,3 +1,14 @@
+<header class='pure-g container'>
+  <div class='pure-u-4-5'>
+    <h1>Twitter Bulletin Board</h1>
+  </div>
+  <div class='pure-u-1-5'>
+    <% if logged_in? %>
+    <form action='/sign_out' method='get'><input class='pure-button pure-button-primary' type='submit' value='Sign Out'></form>
+    <% end %>
+  </div>
+</header>
+<div class='container pure-g'>
 <div class='pure-u-1'>
   <h2>Hello @<%=@user.twitter_name%></h2>
 </div>
@@ -17,4 +28,5 @@
     <% end %>
     </ul>
   <% end %>
+</div>
 </div>
