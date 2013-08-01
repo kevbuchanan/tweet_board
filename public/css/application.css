@@ -20,9 +20,17 @@ th {
   background-color: #0078e7;
   color: white;
   padding: 20px;
-  font-size: 1.8em;
+  font-size: 2.5em;
+  height: 600px;
 }
 
+.bulletin .text-area {
+  height: 400px;
+}
+
+.bulletin .details {
+  height: 200px;
+}
 .bulletin .contributor {
   font-size: .8em;
 }

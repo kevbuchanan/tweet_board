@@ -19,7 +19,7 @@ class Board < ActiveRecord::Base
   end
 
   def next_post
-    load_posts if self.last_update.nil? || self.last_update < 5.minutes.ago
+    #load_posts if self.last_update.nil? || self.last_update < 5.minutes.ago
     self.posts.sample
   end
 

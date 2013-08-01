@@ -1,5 +1,9 @@
 <div class='bulletin'>
-  <p class='text'><%=post.text%></p>
-  <p class='contributor'>Posted by <%=post.contributor.name%> on <%=post.start_date.strftime('%B %d')%></p>
-  <p class='expiration'>This bulletin will expire on <%=post.end_date.strftime('%B %d at %I:%M%p')%></p>
+  <div class='text-area'>
+    <p class='text'><%=post.text%></p>
+  </div>
+  <div class='details'>
+    <p class='contributor'>Posted by <%=post.contributor.name%> on <%=post.start_date.strftime('%B %d')%></p>
+    <p class='expiration'>This bulletin will expire on <%=post.end_date.strftime('%B %d at %I:%M%p')%></p>
+  </div>
 </div>
