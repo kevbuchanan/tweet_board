@@ -27,7 +27,7 @@ class Post < ActiveRecord::Base
 
   def create_tags(hashtags)
     hashtags.each do |tag|
-      self.tags << Tag.create(text: tag.text)
+      self.tags << Tag.find_or_create_by_text(tag.text)
     end
   end
 end

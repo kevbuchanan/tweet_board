@@ -7,8 +7,8 @@ class CreatePosts < ActiveRecord::Migration
       t.text :text
       t.string :photo
       t.string :video
-      t.time :start_date
-      t.time :end_date
+      t.datetime :start_date
+      t.datetime :end_date
       t.timestamps
     end
   end

@@ -8,7 +8,11 @@ class Board < ActiveRecord::Base
 
   def load_posts
     self.mentions.each do |tweet|
-      self.posts << Post.create_from_tweet(tweet)# if self.has_contributor?(tweet.user.screen_name)
+      post = Post.create_from_tweet(tweet)
+      if post.valid?
+        self.posts << post
+        # self.respond_to_contributor(tweet)
+      end
     end
     self.last_update = Time.now
     self.save
@@ -19,7 +23,7 @@ class Board < ActiveRecord::Base
   end
 
   def next_post
-    #load_posts if self.last_update.nil? || self.last_update < 5.minutes.ago
+    # load_posts if self.last_update.nil? || self.last_update < 5.minutes.ago
     self.posts.sample
   end
 
@@ -31,8 +35,17 @@ class Board < ActiveRecord::Base
     !self.contributors.find_by_twitter_name(user_name).nil?
   end
 
+  def respond_to_contributor(tweet)
+    user = tweet.user.screen_name
+    response = "@#{user} we got your tweet. Your announcement will be up shortly and will stay up for 2 days."
+    client.update(response)
+  end
+
   def mentions
-    client = Twitter::Client.new(oauth_token: self.oauth_token, oauth_token_secret: self.oauth_token_secret)
     client.mentions_timeline
+  end
+
+  def client
+    Twitter::Client.new(oauth_token: self.oauth_token, oauth_token_secret: self.oauth_token_secret)
   end
 end

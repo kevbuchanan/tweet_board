@@ -1,7 +1,7 @@
 .container {
   font-family: 'Source Sans Pro', sans-serif;
   margin: 20px auto;
-  width: 80%;
+  width: 90%;
   padding: 0px 20px 20px 20px;
 }
 th {
@@ -16,11 +16,16 @@ th {
   text-align: center;
 }
 
+.title {
+  margin-top: 0;
+  padding-top: 0;
+}
+
 .bulletin {
   background-color: #0078e7;
   color: white;
   padding: 20px;
-  font-size: 2.5em;
+  font-size: 4em;
   height: 600px;
 }
 
@@ -37,4 +42,8 @@ th {
 
 .bulletin .expiration {
   font-size: .8em;
+}
+
+.bulletin p {
+  margin: 20px;
 }
