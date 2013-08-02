@@ -14,7 +14,7 @@ end
 get '/auth' do
   @access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
   session.delete(:request_token)
-  @user = User.find_or_create_by_twitter_name(@access_token.params[:screen_name])
+  @user = User.authenticate(@access_token)
   @user.update_attributes(oauth_token: @access_token.params[:oauth_token], oauth_token_secret: @access_token.params[:oauth_token_secret])
   session[:id] = @user.id
   redirect to("/#{@user.twitter_name}")

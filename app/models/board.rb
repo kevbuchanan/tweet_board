@@ -11,7 +11,7 @@ class Board < ActiveRecord::Base
       post = Post.create_from_tweet(tweet)
       if post.valid?
         self.posts << post
-        # self.respond_to_contributor(tweet)
+        self.respond_to_contributor(tweet.user.screen_name)
       end
     end
     self.last_update = Time.now
@@ -23,7 +23,7 @@ class Board < ActiveRecord::Base
   end
 
   def next_post
-    # load_posts if self.last_update.nil? || self.last_update < 5.minutes.ago
+    load_posts if self.last_update.nil? || self.last_update < 10.minutes.ago
     self.posts.sample
   end
 
@@ -31,13 +31,8 @@ class Board < ActiveRecord::Base
   #   self.contributors.create(twitter_name: self.owner.twitter_name, name: self.owner.name)
   # end
 
-  def has_contributor?(user_name)
-    !self.contributors.find_by_twitter_name(user_name).nil?
-  end
-
-  def respond_to_contributor(tweet)
-    user = tweet.user.screen_name
-    response = "@#{user} we got your tweet. Your announcement will be up shortly and will stay up for 2 days."
+  def respond_to_contributor(user_name)
+    response = "@#{user_name} we got your tweet. Your announcement will be up shortly and will stay up for 2 days."
     client.update(response)
   end
 

@@ -4,10 +4,11 @@ class Post < ActiveRecord::Base
   has_many :posts_tags
   has_many :tags, through: :posts_tags
   validates :tweet_id, uniqueness: true
+  validates :contributor_id, presence: true
 
   def self.create_from_tweet(tweet)
     attributes = {}
-    contributor = Contributor.find_or_create_by_twitter_name(tweet.user.screen_name)
+    contributor = Contributor.find_by_twitter_name(tweet.user.screen_name)
     contributor.update_attributes(name: tweet.user.name)
     attributes[:contributor_id] = contributor.id
     attributes[:text] = Post.get_plain_text(tweet.text)
