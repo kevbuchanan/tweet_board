@@ -16,7 +16,6 @@ class Post < ActiveRecord::Base
     attributes[:start_date] = Time.now
     attributes[:end_date] = Time.now + 2.days
     post = contributor.posts.create(attributes)
-    post.create_tags(tweet.hashtags)
     post
   end
 
@@ -26,9 +25,15 @@ class Post < ActiveRecord::Base
     without_tags.strip.capitalize
   end
 
-  def create_tags(hashtags)
-    hashtags.each do |tag|
+  def create_tags(tweet)
+    tweet.hashtags.each do |tag|
       self.tags << Tag.find_or_create_by_text(tag.text)
+      if tag.text == 'add'
+        self.update_attribute(:end_date, Time.now)
+        tweet.text.scan(/@\w+/).each do |new_contributor|
+          self.board.contributors << Contributor.find_or_create_by_twitter_name(new_contributor[1..-1])
+        end
+      end
     end
   end
 end

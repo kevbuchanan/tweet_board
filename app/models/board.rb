@@ -4,14 +4,16 @@ class Board < ActiveRecord::Base
   has_many :contributors_boards
   has_many :contributors, through: :contributors_boards
 
-  # after_create :add_owner_as_contributor
+  after_create :add_owner_as_contributor
 
   def load_posts
     self.mentions.each do |tweet|
+      next unless self.contributors.find_by_twitter_name(tweet.user.screen_name)
       post = Post.create_from_tweet(tweet)
       if post.valid?
         self.posts << post
-        self.respond_to_contributor(tweet.user.screen_name)
+        post.create_tags(tweet)
+        # self.respond_to_contributor(tweet.user.screen_name)
       end
     end
     self.last_update = Time.now
@@ -27,9 +29,9 @@ class Board < ActiveRecord::Base
     self.posts.sample
   end
 
-  # def add_owner_as_contributor
-  #   self.contributors.create(twitter_name: self.owner.twitter_name, name: self.owner.name)
-  # end
+  def add_owner_as_contributor
+    self.contributors.create(twitter_name: self.owner.twitter_name, name: self.owner.name)
+  end
 
   def respond_to_contributor(user_name)
     response = "@#{user_name} we got your tweet. Your announcement will be up shortly and will stay up for 2 days."
@@ -37,7 +39,7 @@ class Board < ActiveRecord::Base
   end
 
   def mentions
-    client.mentions_timeline
+    client.mentions_timeline(count: 5)
   end
 
   def client

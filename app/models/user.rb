@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
 
   def self.authenticate(access_token)
     user = User.find_by_twitter_name(access_token.params[:screen_name])
-    if user?
+    if user
       user
     else
       User.create(
