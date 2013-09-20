@@ -15,8 +15,7 @@ class User < ActiveRecord::Base
   end
 
   def get_name
-    self.name = client.user.name
-    self.save
+    self.update_attribute(:name, client.user.name)
   end
 
   def client

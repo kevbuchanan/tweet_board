@@ -28,12 +28,14 @@ class Post < ActiveRecord::Base
   def create_tags(tweet)
     tweet.hashtags.each do |tag|
       self.tags << Tag.find_or_create_by_text(tag.text)
-      if tag.text == 'add'
-        self.update_attribute(:end_date, Time.now)
-        tweet.text.scan(/@\w+/).each do |new_contributor|
-          self.board.contributors << Contributor.find_or_create_by_twitter_name(new_contributor[1..-1])
-        end
-      end
+      add_contributor(tweet) if tag.text == 'add'
+    end
+  end
+
+  def add_contributor
+    self.update_attribute(:end_date, Time.now)
+    tweet.text.scan(/@\w+/).each do |new_contributor|
+      self.board.contributors << Contributor.find_or_create_by_twitter_name(new_contributor[1..-1])
     end
   end
 end

@@ -8,16 +8,18 @@ class Board < ActiveRecord::Base
 
   def load_posts
     self.mentions.each do |tweet|
-      next unless self.contributors.find_by_twitter_name(tweet.user.screen_name)
+      next unless is_contributor?(tweet.user)
       post = Post.create_from_tweet(tweet)
       if post.valid?
         self.posts << post
         post.create_tags(tweet)
-        # self.respond_to_contributor(tweet.user.screen_name)
       end
     end
-    self.last_update = Time.now
-    self.save
+    self.update_attribute(:last_update, Time.now)
+  end
+
+  def is_contributor?(user)
+    self.contributors.find_by_twitter_name(user.screen_name)
   end
 
   def active_posts
@@ -26,15 +28,15 @@ class Board < ActiveRecord::Base
 
   def next_post
     load_posts if self.last_update.nil? || self.last_update < 10.minutes.ago
-    self.posts.sample
+    self.active_posts.sample
   end
 
   def add_owner_as_contributor
     self.contributors.create(twitter_name: self.owner.twitter_name, name: self.owner.name)
   end
 
-  def respond_to_contributor(user_name)
-    response = "@#{user_name} we got your tweet. Your announcement will be up shortly and will stay up for 2 days."
+  def respond_to_contributor(tweet)
+    response = "@#{tweet.user.oauth_token_secretreen_name} we got your tweet. Your announcement will be up shortly and will stay up for 2 days."
     client.update(response)
   end
 
